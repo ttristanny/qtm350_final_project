@@ -1,0 +1,78 @@
+---
+title: "QTM 350 Final Project"
+subtitle: "Group Members: [Names], Emory IDs: [IDs]"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Introduction
+
+Write your introduction here.
+
+# Data Description
+
+## Dataset Introduction
+
+The dataset used in this project is the **World Development Indicators (WDI)** from the **World Bank**, a comprehensive collection of more than 1,600 indicators across 200+ countries from 1960–2023.
+
+## Dataset Context and Importance
+
+The WDI dataset enables cross‑country comparisons and long‑run development analysis.
+
+## Data Import
+
+```{python}
+# Use below line of code to install the dataset package
+# !pip install wbgapi
+
+import wbgapi as wb
+
+gdp_pc = wb.data.DataFrame('NY.GDP.PCAP.KD')
+gdp_pc.head()
+```
+
+# Data Analysis
+
+## Descriptive Statistics
+
+```{python}
+gdp_pc.describe()
+```
+
+## Visualization
+
+```{python}
+import matplotlib.pyplot as plt
+
+country_code = 'USA'
+gdp_pc_country = gdp_pc.loc[country_code].dropna()
+
+plt.figure()
+plt.plot(gdp_pc_country.index, gdp_pc_country.values)
+plt.xlabel("Year")
+plt.ylabel("GDP per capita (constant 2015 US$)")
+plt.title(f"GDP per capita over time: {country_code}")
+plt.tight_layout()
+```
+
+# Results and Discussion
+
+Write your discussion here.
+
+# Conclusion
+
+Write your conclusion here.
+
+# References
+
+World Bank. World Development Indicators (WDI). Accessed via wbgapi: https://github.com/tgherzog/wbgapi
