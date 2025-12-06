@@ -1,6 +1,6 @@
 ---
 title: "QTM 350 Final Project"
-subtitle: "Group Members: [Names], Emory IDs: [IDs]"
+subtitle: "Group Members and Emory IDs: Chang Liu(2579008), Emily Liu(2550121), Sally Shen(2549393), Tristan Yang (2592886), Sherry Zhang(2593324)"
 format:
   html:
     toc: true
