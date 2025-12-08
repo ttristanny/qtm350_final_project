@@ -7,9 +7,6 @@ format:
     toc-depth: 3
     theme: cosmo
     self-contained: true
-  pdf:
-    toc: true
-    number-sections: true
 execute:
   echo: true
   warning: false

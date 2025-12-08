@@ -2368,7 +2368,7 @@ window.Quarto = {
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="project_template.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -2408,7 +2408,7 @@ window.Quarto = {
 <h1>Data Description</h1>
 <section id="importing-useful-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="importing-useful-libraries">Importing useful libraries</h2>
-<div id="eb17d42f" class="cell" data-execution_count="1">
+<div id="4714a4b9" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2425,7 +2425,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="data-merging-cleaning">Data merging &amp; cleaning</h2>
 <p>This code demonstrates a data merging and cleaning pipeline for World Bank indicators across five countries (1999–2019). The load_and_melt() function standardizes each CSV into long format, filtering countries early to improve efficiency. Multiple datasets are then merged on common keys (Country Name, Country Code, Year) using outer joins to preserve all data points.</p>
 <p>This step is important because proper merging and cleaning ensures data consistency, prevents missing values from causing analysis errors, and establishes reproducible workflows. By using clear constants, modular functions, and explicit filtering steps, the code remains maintainable and verifiable—critical for reliable statistical analysis.</p>
-<div id="d648ef82" class="cell" data-execution_count="2">
+<div id="8ecd88e9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing original World Bank Dataset from the website</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>PRIMARY_FILE   <span class="op">=</span> <span class="st">&quot;data/API_SE.PRM.ENRR_DS2_en_csv_v2_4680.csv&quot;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SECONDARY_FILE <span class="op">=</span> <span class="st">&quot;data/API_SE.SEC.ENRR_DS2_en_csv_v2_4735.csv&quot;</span></span>
@@ -2558,7 +2558,7 @@ Shape: (105, 10)
 <section id="employment-to-population-ratio-15-total" class="level2">
 <h2 class="anchored" data-anchor-id="employment-to-population-ratio-15-total">Employment to population ratio, 15+, total (%)</h2>
 <p>This section visualizes employment rates from 1999-2019 across five countries using a line plot with markers for trend comparison.</p>
-<div id="2d5ff975" class="cell" data-execution_count="3">
+<div id="19405f64" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the dataset</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&#39;data/living_standards_5countries_1999_2019.csv&#39;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2607,7 +2607,7 @@ Shape: (105, 10)
 <section id="life-expectancy-at-birth-total-years" class="level2">
 <h2 class="anchored" data-anchor-id="life-expectancy-at-birth-total-years">Life expectancy at birth, total (years)</h2>
 <p>The code is intended to show how life expectancy has evolved across five countries from 1999 to 2019, using time-series and summary comparisons. It generates a line plot of yearly trends and a bar chart of overall improvement over a 20-year period to emphasize variations in long-term population health improvements.</p>
-<div id="035ec4c5" class="cell" data-execution_count="4">
+<div id="4da11dea" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/living_standards_5countries_1999_2019.csv&quot;</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2672,7 +2672,7 @@ Shape: (105, 10)
 <section id="mortality-rate-under-5-per-1000-live-births" class="level2">
 <h2 class="anchored" data-anchor-id="mortality-rate-under-5-per-1000-live-births">Mortality rate, under-5 (per 1,000 live births)</h2>
 <p>The code loads the five-country dataset, selects the under-5 mortality variable, cleans the data, and visualizes trends from 1999–2019 using three figures: a multi-country line plot, a per-country FacetGrid, and a heatmap. These graphs highlight overall declines and cross-country differences in child mortality.</p>
-<div id="6ee17f37" class="cell" data-execution_count="5">
+<div id="a85dd367" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Styling ----</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">&quot;whitegrid&quot;</span>, context<span class="op">=</span><span class="st">&quot;talk&quot;</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: These rcParams set defaults, but specific figsize arguments </span></span>
@@ -2816,7 +2816,7 @@ Shape: (105, 10)
 <section id="education" class="level2">
 <h2 class="anchored" data-anchor-id="education">Education</h2>
 <p>This section plots primary, secondary, and tertiary gross enrollment rates for our five countries from 1999–2019, interpolating only isolated missing years. The goal is to compare how education coverage at each level has evolved over time and how quickly different countries expanded access along the schooling pipeline.</p>
-<div id="18834c98" class="cell" data-execution_count="6">
+<div id="0815b699" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_isolated_nans(s: pd.Series) <span class="op">-&gt;</span> pd.Series:</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    For a 1D series:</span></span>
