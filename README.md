@@ -1,5 +1,7 @@
 # QTM 350 Final Project: Life Quality Across Five Countries
 
+Group Members(Emory ID): Chang Liu(2579008), Emily Liu(2550121), Sally Shen(2549393), Tristan Yang (2592886), Sherry Zhang(2593324)
+
 This project analyzes how **quality of life** has evolved from **1999–2019** in five countries that had **similar GDP per capita** around 1999 but are located on different continents:
 
 - **Albania** (Europe)  
