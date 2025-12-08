@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="project_template_files/libs/clipboard/clipboard.min.js"></script>
+<script src="project_template_files/libs/clipboard/clipboard.min.js"></script>
 <script src="project_template_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="project_template_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="project_template_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,10 +70,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="project_template_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="project_template_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="project_template_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -85,19 +111,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#description-of-topic-and-research-question" id="toc-description-of-topic-and-research-question" class="nav-link" data-scroll-target="#description-of-topic-and-research-question">Description of topic and research question</a></li>
+  <li><a href="#summary-of-main-findings" id="toc-summary-of-main-findings" class="nav-link" data-scroll-target="#summary-of-main-findings">Summary of main findings</a></li>
+  </ul></li>
   <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">Data Description</a>
   <ul class="collapse">
-  <li><a href="#dataset-introduction" id="toc-dataset-introduction" class="nav-link" data-scroll-target="#dataset-introduction">Dataset Introduction</a></li>
-  <li><a href="#dataset-context-and-importance" id="toc-dataset-context-and-importance" class="nav-link" data-scroll-target="#dataset-context-and-importance">Dataset Context and Importance</a></li>
-  <li><a href="#data-import" id="toc-data-import" class="nav-link" data-scroll-target="#data-import">Data Import</a></li>
+  <li><a href="#importing-useful-libraries" id="toc-importing-useful-libraries" class="nav-link" data-scroll-target="#importing-useful-libraries">Importing useful libraries</a></li>
+  <li><a href="#dataset-introduction-and-context" id="toc-dataset-introduction-and-context" class="nav-link" data-scroll-target="#dataset-introduction-and-context">Dataset introduction and context</a></li>
+  <li><a href="#data-merging-cleaning" id="toc-data-merging-cleaning" class="nav-link" data-scroll-target="#data-merging-cleaning">Data merging &amp; cleaning</a></li>
+  <li><a href="#summary-of-key-variables-columns" id="toc-summary-of-key-variables-columns" class="nav-link" data-scroll-target="#summary-of-key-variables-columns">Summary of key variables (columns)</a></li>
   </ul></li>
   <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a></li>
-  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
+  <li><a href="#employment-to-population-ratio-15-total" id="toc-employment-to-population-ratio-15-total" class="nav-link" data-scroll-target="#employment-to-population-ratio-15-total">Employment to population ratio, 15+, total (%)</a></li>
+  <li><a href="#life-expectancy-at-birth-total-years" id="toc-life-expectancy-at-birth-total-years" class="nav-link" data-scroll-target="#life-expectancy-at-birth-total-years">Life expectancy at birth, total (years)</a></li>
+  <li><a href="#mortality-rate-under-5-per-1000-live-births" id="toc-mortality-rate-under-5-per-1000-live-births" class="nav-link" data-scroll-target="#mortality-rate-under-5-per-1000-live-births">Mortality rate, under-5 (per 1,000 live births)</a></li>
+  <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education">Education</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -108,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">QTM 350 Final Project</h1>
-<p class="subtitle lead">Group Members: [Names], Emory IDs: [IDs]</p>
+<p class="subtitle lead">Group Members and Emory IDs: Chang Liu(2579008), Emily Liu(2550121), Sally Shen(2549393), Tristan Yang (2592886), Sherry Zhang(2593324)</p>
 </div>
 
 
@@ -127,482 +159,549 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Write your introduction here.</p>
+<section id="description-of-topic-and-research-question" class="level2">
+<h2 class="anchored" data-anchor-id="description-of-topic-and-research-question">Description of topic and research question</h2>
+<p>How does quality of life evolve in countries that start at similar income levels but are located in very different parts of the world? To answer this question, we study five countries that had comparable GDP per capita around 1999 yet span five continents: Albania (Europe), Azerbaijan (Asia), Botswana (Africa), Colombia (South America), and Fiji (Oceania). By following these countries over the period 1999–2019, we can observe whether their trajectories converge or diverge as they experience distinct political, demographic, and policy environments.</p>
+<p>Using the World Bank’s World Development Indicators (WDI), we assess quality of life along two broad dimensions. First, we examine economic and health outcomes, focusing on the employment rate, life expectancy at birth, and under-5 mortality rate. These indicators capture both the material conditions of households and basic population health. Second, we analyze education coverage, measured through primary, secondary, and tertiary gross enrollment rates. Education reflects not only current welfare but also future human capital and growth potential.</p>
+</section>
+<section id="summary-of-main-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-main-findings">Summary of main findings</h2>
+<p>Five countries with similar 1999 GDP per capita diverged substantially by 2019. Employment declined in Azerbaijan but improved in Albania. Life expectancy rose universally, with Botswana gaining 14+ years. Under-5 mortality fell across all nations. Education expansion varied dramatically: tertiary enrollment surged to 60–80% in Albania, Colombia, and Fiji, but grew modestly in Botswana and Azerbaijan. These findings demonstrate that comparable initial income does not guarantee similar development outcomes.</p>
+</section>
 </section>
 <section id="data-description" class="level1">
 <h1>Data Description</h1>
-<section id="dataset-introduction" class="level2">
-<h2 class="anchored" data-anchor-id="dataset-introduction">Dataset Introduction</h2>
-<p>The dataset used in this project is the <strong>World Development Indicators (WDI)</strong> from the <strong>World Bank</strong>, a comprehensive collection of more than 1,600 indicators across 200+ countries from 1960–2023.</p>
+<section id="importing-useful-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-useful-libraries">Importing useful libraries</h2>
+<div id="6ea7470e" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="dataset-context-and-importance" class="level2">
-<h2 class="anchored" data-anchor-id="dataset-context-and-importance">Dataset Context and Importance</h2>
-<p>The WDI dataset enables cross‑country comparisons and long‑run development analysis.</p>
+<section id="dataset-introduction-and-context" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-introduction-and-context">Dataset introduction and context</h2>
+<p>The dataset used in this project is the <strong>World Development Indicators (WDI)</strong> from the <strong>World Bank</strong>, a comprehensive collection of more than 1,600 indicators across 200+ countries from 1960–2023. The WDI dataset enables cross‑country comparisons and long‑run development analysis.</p>
 </section>
-<section id="data-import" class="level2">
-<h2 class="anchored" data-anchor-id="data-import">Data Import</h2>
-<div id="a29b30cd" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use below line of code to install the dataset package</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install wbgapi</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> wbgapi <span class="im">as</span> wb</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>gdp_pc <span class="op">=</span> wb.data.DataFrame(<span class="st">'NY.GDP.PCAP.KD'</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>gdp_pc.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
+<section id="data-merging-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-merging-cleaning">Data merging &amp; cleaning</h2>
+<p>This code demonstrates a data merging and cleaning pipeline for World Bank indicators across five countries (1999–2019). The load_and_melt() function standardizes each CSV into long format, filtering countries early to improve efficiency. Multiple datasets are then merged on common keys (Country Name, Country Code, Year) using outer joins to preserve all data points.</p>
+<p>This step is important because proper merging and cleaning ensures data consistency, prevents missing values from causing analysis errors, and establishes reproducible workflows. By using clear constants, modular functions, and explicit filtering steps, the code remains maintainable and verifiable—critical for reliable statistical analysis.</p>
+<div id="4c3f56a9" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing original World Bank Dataset from the website</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>PRIMARY_FILE   <span class="op">=</span> <span class="st">"data/API_SE.PRM.ENRR_DS2_en_csv_v2_4680.csv"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SECONDARY_FILE <span class="op">=</span> <span class="st">"data/API_SE.SEC.ENRR_DS2_en_csv_v2_4735.csv"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>TERTIARY_FILE  <span class="op">=</span> <span class="st">"data/API_SE.TER.ENRR_DS2_en_csv_v2_3421.csv"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>MORTALITY_FILE <span class="op">=</span> <span class="st">"data/API_SH.DYN.MORT_DS2_en_csv_v2_6199.csv"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>LIFEEXP_FILE   <span class="op">=</span> <span class="st">"data/API_SP.DYN.LE00.IN_DS2_en_csv_v2_2505.csv"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>GDP_PC_FILE    <span class="op">=</span> <span class="st">"data/API_NY.GDP.PCAP.KD_DS2_en_csv_v2_2624.csv"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>EMP_RATE_FILE  <span class="op">=</span> <span class="st">"data/API_SL.EMP.TOTL.SP.ZS_DS2_en_csv_v2_4653.csv"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>OUTPUT_DIR  <span class="op">=</span> <span class="st">"data"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>OUTPUT_FILE <span class="op">=</span> os.path.join(OUTPUT_DIR, <span class="st">"living_standards_5countries_1999_2019.csv"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>START_YEAR <span class="op">=</span> <span class="dv">1999</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>END_YEAR   <span class="op">=</span> <span class="dv">2019</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>YEAR_COLS  <span class="op">=</span> [<span class="bu">str</span>(y) <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(START_YEAR, END_YEAR <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Restrict to your 5 project countries</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>TARGET_COUNTRIES <span class="op">=</span> [<span class="st">"Botswana"</span>, <span class="st">"Azerbaijan"</span>, <span class="st">"Albania"</span>, <span class="st">"Colombia"</span>, <span class="st">"Fiji"</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_and_melt(path: <span class="bu">str</span>, value_name: <span class="bu">str</span>) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Load a World Bank CSV (single indicator), keep 1999–2019,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">    and return a long DataFrame with:</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">    Country Name, Country Code, Year, &lt;value_name&gt;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(path, skiprows<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> [<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>] <span class="op">+</span> YEAR_COLS</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[cols].copy()</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Restrict to the 5 target countries as early as possible</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df[<span class="st">"Country Name"</span>].isin(TARGET_COUNTRIES)].copy()</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    long_df <span class="op">=</span> df.melt(</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        id_vars<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>],</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        value_vars<span class="op">=</span>YEAR_COLS,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        var_name<span class="op">=</span><span class="st">"Year"</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        value_name<span class="op">=</span>value_name</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    long_df[<span class="st">"Year"</span>] <span class="op">=</span> long_df[<span class="st">"Year"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> long_df</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- Load each indicator for the 5 countries -----</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    primary_long   <span class="op">=</span> load_and_melt(PRIMARY_FILE,   <span class="st">"primary_enrollment_gross"</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    secondary_long <span class="op">=</span> load_and_melt(SECONDARY_FILE, <span class="st">"secondary_enrollment_gross"</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    tertiary_long  <span class="op">=</span> load_and_melt(TERTIARY_FILE,  <span class="st">"tertiary_enrollment_gross"</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    mortality_long <span class="op">=</span> load_and_melt(MORTALITY_FILE, <span class="st">"under5_mortality_per_1000"</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    lifeexp_long   <span class="op">=</span> load_and_melt(LIFEEXP_FILE,   <span class="st">"life_expectancy_years"</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    gdp_pc_long    <span class="op">=</span> load_and_melt(GDP_PC_FILE,    <span class="st">"gdp_per_capita_constant_2015usd"</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    emp_rate_long  <span class="op">=</span> load_and_melt(EMP_RATE_FILE,  <span class="st">"employment_rate_percent"</span>)</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- Merge into one panel (5 countries × 1999–2019) -----</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    merged <span class="op">=</span> (</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        primary_long</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>        .merge(secondary_long, on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        .merge(tertiary_long,  on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        .merge(mortality_long, on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        .merge(lifeexp_long,   on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        .merge(gdp_pc_long,    on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        .merge(emp_rate_long,  on<span class="op">=</span>[<span class="st">"Country Name"</span>, <span class="st">"Country Code"</span>, <span class="st">"Year"</span>], how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        .sort_values([<span class="st">"Country Name"</span>, <span class="st">"Year"</span>])</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Safety: enforce filter again in case any extra slipped through</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    merged <span class="op">=</span> merged[merged[<span class="st">"Country Name"</span>].isin(TARGET_COUNTRIES)].copy()</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- Save -----</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    os.makedirs(OUTPUT_DIR, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    merged.to_csv(OUTPUT_FILE, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Saved merged 5-country dataset to: </span><span class="sc">{</span>OUTPUT_FILE<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Shape: </span><span class="sc">{</span>merged<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(merged.head())</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Saved merged 5-country dataset to: data/living_standards_5countries_1999_2019.csv
+Shape: (105, 10)
+  Country Name Country Code  Year  primary_enrollment_gross  \
+0      Albania          ALB  1999                       NaN   
+1      Albania          ALB  2000                       NaN   
+2      Albania          ALB  2001                       NaN   
+3      Albania          ALB  2002                110.338921   
+4      Albania          ALB  2003                107.598259   
 
+   secondary_enrollment_gross  tertiary_enrollment_gross  \
+0                         NaN                        NaN   
+1                         NaN                        NaN   
+2                         NaN                        NaN   
+3                   74.538918                  16.389561   
+4                   77.751823                  16.366240   
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">YR1960</th>
-<th data-quarto-table-cell-role="th">YR1961</th>
-<th data-quarto-table-cell-role="th">YR1962</th>
-<th data-quarto-table-cell-role="th">YR1963</th>
-<th data-quarto-table-cell-role="th">YR1964</th>
-<th data-quarto-table-cell-role="th">YR1965</th>
-<th data-quarto-table-cell-role="th">YR1966</th>
-<th data-quarto-table-cell-role="th">YR1967</th>
-<th data-quarto-table-cell-role="th">YR1968</th>
-<th data-quarto-table-cell-role="th">YR1969</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">YR2015</th>
-<th data-quarto-table-cell-role="th">YR2016</th>
-<th data-quarto-table-cell-role="th">YR2017</th>
-<th data-quarto-table-cell-role="th">YR2018</th>
-<th data-quarto-table-cell-role="th">YR2019</th>
-<th data-quarto-table-cell-role="th">YR2020</th>
-<th data-quarto-table-cell-role="th">YR2021</th>
-<th data-quarto-table-cell-role="th">YR2022</th>
-<th data-quarto-table-cell-role="th">YR2023</th>
-<th data-quarto-table-cell-role="th">YR2024</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">economy</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">ABW</th>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>27458.225331</td>
-<td>27719.500731</td>
-<td>29671.135829</td>
-<td>30334.116222</td>
-<td>29576.809715</td>
-<td>21947.995330</td>
-<td>27469.005622</td>
-<td>29917.128029</td>
-<td>31178.473679</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">AFE</th>
-<td>1172.243576</td>
-<td>1147.240329</td>
-<td>1204.703044</td>
-<td>1238.367092</td>
-<td>1261.023946</td>
-<td>1289.344084</td>
-<td>1314.066248</td>
-<td>1345.846757</td>
-<td>1361.807045</td>
-<td>1390.387047</td>
-<td>...</td>
-<td>1479.615260</td>
-<td>1472.699230</td>
-<td>1472.971152</td>
-<td>1471.438317</td>
-<td>1463.437891</td>
-<td>1383.724119</td>
-<td>1409.040699</td>
-<td>1421.797169</td>
-<td>1412.625384</td>
-<td>1416.250369</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">AFG</th>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>565.569730</td>
-<td>563.872337</td>
-<td>562.769574</td>
-<td>553.125152</td>
-<td>557.861533</td>
-<td>527.834554</td>
-<td>408.625855</td>
-<td>377.665627</td>
-<td>378.066303</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">AFW</th>
-<td>1122.268548</td>
-<td>1119.450062</td>
-<td>1136.671637</td>
-<td>1190.566304</td>
-<td>1227.326470</td>
-<td>1249.709471</td>
-<td>1203.426396</td>
-<td>1070.979475</td>
-<td>1062.926658</td>
-<td>1195.395480</td>
-<td>...</td>
-<td>1860.727694</td>
-<td>1815.168693</td>
-<td>1808.716493</td>
-<td>1814.688734</td>
-<td>1829.070620</td>
-<td>1768.313565</td>
-<td>1796.602085</td>
-<td>1824.953296</td>
-<td>1841.758346</td>
-<td>1873.200724</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">AGO</th>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>...</td>
-<td>3213.902611</td>
-<td>3020.983328</td>
-<td>2911.600842</td>
-<td>2775.746423</td>
-<td>2664.438510</td>
-<td>2433.376373</td>
-<td>2385.448818</td>
-<td>2382.022640</td>
-<td>2334.661043</td>
-<td>2364.846591</td>
-</tr>
-</tbody>
-</table>
+   under5_mortality_per_1000  life_expectancy_years  \
+0                       28.4                 74.568   
+1                       27.1                 74.826   
+2                       25.7                 75.083   
+3                       24.3                 75.299   
+4                       22.9                 75.557   
 
-<p>5 rows × 65 columns</p>
+   gdp_per_capita_constant_2015usd  employment_rate_percent  
+0                      1841.807628                   48.222  
+1                      1991.914359                   48.939  
+2                      2188.918545                   48.766  
+3                      2297.108535                   48.945  
+4                      2428.689347                   48.611  </code></pre>
 </div>
 </div>
-</div>
+<p>After merging and cleaning the dataset, the csv file is saved in the data folder and is ready to be used.</p>
+</section>
+<section id="summary-of-key-variables-columns" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-key-variables-columns">Summary of key variables (columns)</h2>
+<p><strong>- Employment-to-population ratio</strong> is the share of the total population that is currently employed.</p>
+<p><strong>- Life expectancy at birth</strong> is the average number of years a newborn is expected to live if current mortality patterns remain constant over its lifetime.</p>
+<p><strong>- Under-five mortality rate</strong> is the probability (per 1,000 live births) that a newborn will die before reaching age five, given the mortality rates of that year.</p>
+<p><strong>- Primary gross enrollment ratio</strong> is total enrollment in primary education, regardless of age, expressed as a percentage of the official primary-school–age population.</p>
+<p><strong>- Secondary gross enrollment ratio</strong> is total enrollment in secondary education, regardless of age, expressed as a percentage of the official secondary-school–age population.</p>
+<p><strong>- Tertiary gross enrollment ratio</strong> is total enrollment in tertiary education, regardless of age, expressed as a percentage of the official tertiary-school–age population.</p>
 </section>
 </section>
 <section id="data-analysis" class="level1">
 <h1>Data Analysis</h1>
-<section id="descriptive-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
-<div id="36dbda1c" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gdp_pc.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">YR1960</th>
-<th data-quarto-table-cell-role="th">YR1961</th>
-<th data-quarto-table-cell-role="th">YR1962</th>
-<th data-quarto-table-cell-role="th">YR1963</th>
-<th data-quarto-table-cell-role="th">YR1964</th>
-<th data-quarto-table-cell-role="th">YR1965</th>
-<th data-quarto-table-cell-role="th">YR1966</th>
-<th data-quarto-table-cell-role="th">YR1967</th>
-<th data-quarto-table-cell-role="th">YR1968</th>
-<th data-quarto-table-cell-role="th">YR1969</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">YR2015</th>
-<th data-quarto-table-cell-role="th">YR2016</th>
-<th data-quarto-table-cell-role="th">YR2017</th>
-<th data-quarto-table-cell-role="th">YR2018</th>
-<th data-quarto-table-cell-role="th">YR2019</th>
-<th data-quarto-table-cell-role="th">YR2020</th>
-<th data-quarto-table-cell-role="th">YR2021</th>
-<th data-quarto-table-cell-role="th">YR2022</th>
-<th data-quarto-table-cell-role="th">YR2023</th>
-<th data-quarto-table-cell-role="th">YR2024</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">count</th>
-<td>144.000000</td>
-<td>151.000000</td>
-<td>151.000000</td>
-<td>151.000000</td>
-<td>151.000000</td>
-<td>153.000000</td>
-<td>157.000000</td>
-<td>158.000000</td>
-<td>158.000000</td>
-<td>158.000000</td>
-<td>...</td>
-<td>259.000000</td>
-<td>256.000000</td>
-<td>256.000000</td>
-<td>256.000000</td>
-<td>255.000000</td>
-<td>255.000000</td>
-<td>255.000000</td>
-<td>255.000000</td>
-<td>249.000000</td>
-<td>232.000000</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">mean</th>
-<td>4715.434088</td>
-<td>4708.111660</td>
-<td>4863.429724</td>
-<td>5016.823772</td>
-<td>5275.360360</td>
-<td>5579.516804</td>
-<td>5687.832536</td>
-<td>5814.749407</td>
-<td>6071.684081</td>
-<td>6364.755835</td>
-<td>...</td>
-<td>15670.547829</td>
-<td>15302.700223</td>
-<td>15554.401081</td>
-<td>15888.598111</td>
-<td>16177.573832</td>
-<td>14977.576342</td>
-<td>16009.447061</td>
-<td>16567.226858</td>
-<td>16312.202309</td>
-<td>15039.404706</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">std</th>
-<td>6879.796920</td>
-<td>7018.010467</td>
-<td>7210.103926</td>
-<td>7384.188094</td>
-<td>7807.908893</td>
-<td>8112.034558</td>
-<td>8401.734023</td>
-<td>8710.117965</td>
-<td>8969.850734</td>
-<td>9329.838167</td>
-<td>...</td>
-<td>23570.955343</td>
-<td>21968.987505</td>
-<td>22070.686216</td>
-<td>22547.989651</td>
-<td>23034.606466</td>
-<td>21211.387699</td>
-<td>23229.400990</td>
-<td>24187.666741</td>
-<td>24414.377567</td>
-<td>20138.119763</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">min</th>
-<td>129.772040</td>
-<td>127.564281</td>
-<td>129.887941</td>
-<td>144.000793</td>
-<td>132.522440</td>
-<td>143.417218</td>
-<td>133.398255</td>
-<td>122.678901</td>
-<td>134.388137</td>
-<td>135.702756</td>
-<td>...</td>
-<td>280.966831</td>
-<td>274.513363</td>
-<td>269.476890</td>
-<td>265.672394</td>
-<td>261.750180</td>
-<td>255.078218</td>
-<td>255.917951</td>
-<td>253.691642</td>
-<td>253.445651</td>
-<td>255.598396</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">25%</th>
-<td>886.804076</td>
-<td>824.513367</td>
-<td>864.357764</td>
-<td>870.605096</td>
-<td>916.841782</td>
-<td>935.954213</td>
-<td>958.850657</td>
-<td>934.839171</td>
-<td>952.878878</td>
-<td>995.392649</td>
-<td>...</td>
-<td>1996.657596</td>
-<td>2051.553461</td>
-<td>2001.264256</td>
-<td>2049.754152</td>
-<td>2068.087866</td>
-<td>1997.500127</td>
-<td>2130.369905</td>
-<td>2136.975118</td>
-<td>2236.805080</td>
-<td>2180.083936</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">50%</th>
-<td>1530.841776</td>
-<td>1575.524061</td>
-<td>1544.730841</td>
-<td>1624.518695</td>
-<td>1640.504494</td>
-<td>1721.809888</td>
-<td>1705.990591</td>
-<td>1700.465461</td>
-<td>1759.067308</td>
-<td>1878.457912</td>
-<td>...</td>
-<td>6141.203947</td>
-<td>6068.626927</td>
-<td>6232.844768</td>
-<td>6358.219481</td>
-<td>6439.963598</td>
-<td>6109.196081</td>
-<td>6457.730538</td>
-<td>6527.482079</td>
-<td>6449.230288</td>
-<td>6620.675369</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">75%</th>
-<td>5310.533366</td>
-<td>4747.751856</td>
-<td>4838.666743</td>
-<td>4951.173778</td>
-<td>5921.966249</td>
-<td>6547.982998</td>
-<td>5791.113279</td>
-<td>6118.271917</td>
-<td>6683.105659</td>
-<td>6919.957118</td>
-<td>...</td>
-<td>19060.625424</td>
-<td>18861.217726</td>
-<td>19242.388883</td>
-<td>19165.300266</td>
-<td>19920.853014</td>
-<td>17753.871132</td>
-<td>18924.030285</td>
-<td>20028.678188</td>
-<td>19381.246074</td>
-<td>18477.804424</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">max</th>
-<td>39907.263927</td>
-<td>42297.964716</td>
-<td>43214.515492</td>
-<td>44364.466028</td>
-<td>45930.292957</td>
-<td>46358.450838</td>
-<td>51062.408151</td>
-<td>56696.152709</td>
-<td>56867.577462</td>
-<td>57787.656227</td>
-<td>...</td>
-<td>170437.101188</td>
-<td>173120.189785</td>
-<td>165781.779122</td>
-<td>173041.761058</td>
-<td>185582.755690</td>
-<td>161262.925884</td>
-<td>194674.777609</td>
-<td>213937.006284</td>
-<td>224582.449752</td>
-<td>117661.271727</td>
-</tr>
-</tbody>
-</table>
-
-<p>8 rows × 65 columns</p>
-</div>
-</div>
-</div>
-</section>
-<section id="visualization" class="level2">
-<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
-<div id="5ae28174" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>country_code <span class="op">=</span> <span class="st">'USA'</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>gdp_pc_country <span class="op">=</span> gdp_pc.loc[country_code].dropna()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.plot(gdp_pc_country.index, gdp_pc_country.values)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"GDP per capita (constant 2015 US$)"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"GDP per capita over time: </span><span class="sc">{</span>country_code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="employment-to-population-ratio-15-total" class="level2">
+<h2 class="anchored" data-anchor-id="employment-to-population-ratio-15-total">Employment to population ratio, 15+, total (%)</h2>
+<p>This section visualizes employment rates from 1999-2019 across five countries using a line plot with markers for trend comparison.</p>
+<div id="a262b731" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'data/living_standards_5countries_1999_2019.csv'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data for years 1999-2019</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df[(df[<span class="st">'Year'</span>] <span class="op">&gt;=</span> <span class="dv">1999</span>) <span class="op">&amp;</span> (df[<span class="st">'Year'</span>] <span class="op">&lt;=</span> <span class="dv">2019</span>)]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique countries</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> df_filtered[<span class="st">'Country Name'</span>].unique()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    country_data <span class="op">=</span> df_filtered[df_filtered[<span class="st">'Country Name'</span>] <span class="op">==</span> country]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort by year to ensure correct line plotting</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    country_data <span class="op">=</span> country_data.sort_values(<span class="st">'Year'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    plt.plot(country_data[<span class="st">'Year'</span>], country_data[<span class="st">'employment_rate_percent'</span>], label<span class="op">=</span>country, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title and labels</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Employment Rate (1999-2019) for 5 Countries'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Employment Rate (%)'</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-axis ticks to ensure integer years are shown clearly</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">sorted</span>(df_filtered[<span class="st">'Year'</span>].unique()), rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grid</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the plot</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project_template_files/figure-html/cell-4-output-1.png" width="660" height="468" class="figure-img"></p>
+<p><img src="project_template_files/figure-html/cell-4-output-1.png" width="928" height="543" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Botswana and Colombia maintained the highest overall employment rates. Botswana remained relatively stable, consistently around <span class="math inline">\(60\%-65\%\)</span>, while Colombia demonstrated a steady increase, climbing from approximately <span class="math inline">\(55\%\)</span> to nearly <span class="math inline">\(60\%\)</span> by 2019. In contrast, Albania and Azerbaijan started with the lowest rates, but their paths diverged sharply. Albania showed a strong positive trend, successfully increasing its employment rate from under <span class="math inline">\(50\%\)</span> to over <span class="math inline">\(55\%\)</span>. Conversely, Azerbaijan followed a notable negative trajectory, with its rate consistently decreasing and dropping below <span class="math inline">\(50\%\)</span> in the later years. Fiji’s employment rate remained relatively flat, hovering around the <span class="math inline">\(55\%\)</span> mark. This pattern highlights that while most nations saw stable or improving labor market participation, Azerbaijan experienced a pronounced and consistent decline over the two-decade period.</p>
 </section>
+<section id="life-expectancy-at-birth-total-years" class="level2">
+<h2 class="anchored" data-anchor-id="life-expectancy-at-birth-total-years">Life expectancy at birth, total (years)</h2>
+<p>The code is intended to show how life expectancy has evolved across five countries from 1999 to 2019, using time-series and summary comparisons. It generates a line plot of yearly trends and a bar chart of overall improvement over a 20-year period to emphasize variations in long-term population health improvements.</p>
+<div id="deafdbd9" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/living_standards_5countries_1999_2019.csv"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List of countries directly from dataset</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> df[<span class="st">"Country Name"</span>].unique()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Line Plot of Life Expectancy Over Time for Each Country</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> df[df[<span class="st">"Country Name"</span>] <span class="op">==</span> country]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    plt.plot(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        temp[<span class="st">"Year"</span>],</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        temp[<span class="st">"life_expectancy_years"</span>],</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span>country</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Life Expectancy at Birth (1999–2019)"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Life Expectancy (Years)"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Country"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar Plot: Improvement from 1999 to 2019</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>improvement_df <span class="op">=</span> (</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"Year"</span>].isin([<span class="dv">1999</span>, <span class="dv">2019</span>])]</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    .pivot(index<span class="op">=</span><span class="st">"Country Name"</span>, columns<span class="op">=</span><span class="st">"Year"</span>, values<span class="op">=</span><span class="st">"life_expectancy_years"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate improvement</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>improvement_df[<span class="st">"Improvement"</span>] <span class="op">=</span> improvement_df[<span class="dv">2019</span>] <span class="op">-</span> improvement_df[<span class="dv">1999</span>]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>plt.bar(improvement_df[<span class="st">"Country Name"</span>], improvement_df[<span class="st">"Improvement"</span>], color<span class="op">=</span><span class="st">"skyblue"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Improvement in Life Expectancy (1999–2019)"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Country"</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Years of Life Expectancy Gained"</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-5-output-1.png" width="928" height="543" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-5-output-2.png" width="927" height="544" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The line plot of life expectancy from 1999 to 2019 demonstrates steady upward trends in all five countries, although the magnitudes and rates of improvement vary significantly. Albania and Colombia maintained the highest life expectancy throughout the period and showed consistent, moderate development. Azerbaijan likewise showed steady development, but at a significantly lower starting point compared to Albania and Colombia. Botswana had the most significant growth, starting with the lowest life expectancy in 1999 and rising rapidly, particularly in the mid-2000s, due to notable public health efforts such as expanded HIV/AIDS treatment. In contrast, Fiji experienced relatively little change and had the most consistent trajectory, indicating slower long-term improvements in population health.</p>
+<p>The bar chart, which displays total improvement between 1999 and 2019, reinforces these trends. Botswana made the greatest improvement, extending life expectancy by more than 14 years, while Azerbaijan also made significant improvements, improving by roughly 8.5 years. Albania and Colombia experienced moderate growth, in keeping with their already high starting points. Fiji had the smallest growth, increasing by less than a year during the last two decades. These findings suggest that countries with lower starting life expectancy experienced the most fast improvement, while countries with higher baselines saw more slow, incremental advances.</p>
 </section>
-<section id="results-and-discussion" class="level1">
-<h1>Results and Discussion</h1>
-<p>Write your discussion here.</p>
+<section id="mortality-rate-under-5-per-1000-live-births" class="level2">
+<h2 class="anchored" data-anchor-id="mortality-rate-under-5-per-1000-live-births">Mortality rate, under-5 (per 1,000 live births)</h2>
+<p>The code loads the five-country dataset, selects the under-5 mortality variable, cleans the data, and visualizes trends from 1999–2019 using three figures: a multi-country line plot, a per-country FacetGrid, and a heatmap. These graphs highlight overall declines and cross-country differences in child mortality.</p>
+<div id="c23f985c" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Styling ----</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"whitegrid"</span>, context<span class="op">=</span><span class="st">"talk"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: These rcParams set defaults, but specific figsize arguments </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in the plots below will override them.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.spines.top"</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.spines.right"</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.titleweight"</span>] <span class="op">=</span> <span class="st">"bold"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.labelweight"</span>] <span class="op">=</span> <span class="st">"bold"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== 1. Load merged 5-country dataset ======</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure this path is correct for your machine</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>FILE <span class="op">=</span> <span class="st">"data/living_standards_5countries_1999_2019.csv"</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    df_full <span class="op">=</span> pd.read_csv(FILE)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"File not found at </span><span class="sc">{</span>FILE<span class="sc">}</span><span class="ss">. Please check the path."</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stop execution if data is missing to prevent errors below</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    df_full <span class="op">=</span> pd.DataFrame() </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> df_full.empty:</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter for the 5 countries</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    countries <span class="op">=</span> [<span class="st">"Botswana"</span>, <span class="st">"Azerbaijan"</span>, <span class="st">"Albania"</span>, <span class="st">"Colombia"</span>, <span class="st">"Fiji"</span>]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    df_full <span class="op">=</span> df_full[df_full[<span class="st">"Country Name"</span>].isin(countries)].copy()</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep only the columns needed for these plots</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    df_long <span class="op">=</span> df_full[[<span class="st">"Country Name"</span>, <span class="st">"Year"</span>, <span class="st">"under5_mortality_per_1000"</span>]].rename(</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>{<span class="st">"under5_mortality_per_1000"</span>: <span class="st">"Mortality"</span>}</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop missing values and ensure Year is int</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    df_long <span class="op">=</span> df_long.dropna(subset<span class="op">=</span>[<span class="st">"Mortality"</span>])</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    df_long[<span class="st">"Year"</span>] <span class="op">=</span> df_long[<span class="st">"Year"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update country list based on actual data present</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    countries <span class="op">=</span> df_long[<span class="st">"Country Name"</span>].unique().tolist()</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    years <span class="op">=</span> <span class="bu">sorted</span>(df_long[<span class="st">"Year"</span>].unique())</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ====== 2. Multi-country line plot ======</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    palette <span class="op">=</span> sns.color_palette(<span class="st">"viridis"</span>, n_colors<span class="op">=</span><span class="bu">len</span>(countries))</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>))</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, (country, group) <span class="kw">in</span> <span class="bu">enumerate</span>(df_long.groupby(<span class="st">"Country Name"</span>)):</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>        group <span class="op">=</span> group.sort_values(<span class="st">"Year"</span>)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        ax.plot(</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>            group[<span class="st">"Year"</span>], group[<span class="st">"Mortality"</span>],</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span>country,</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="fl">2.5</span>,</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>            marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>            markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>            alpha<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>palette[i]</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Highlight start and end values</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>        start_year <span class="op">=</span> group[<span class="st">"Year"</span>].<span class="bu">min</span>()</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>        end_year <span class="op">=</span> group[<span class="st">"Year"</span>].<span class="bu">max</span>()</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        start <span class="op">=</span> group.loc[group[<span class="st">"Year"</span>] <span class="op">==</span> start_year, <span class="st">"Mortality"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        end <span class="op">=</span> group.loc[group[<span class="st">"Year"</span>] <span class="op">==</span> end_year, <span class="st">"Mortality"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>        ax.text(start_year <span class="op">-</span> <span class="fl">0.2</span>, start <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f"</span><span class="sc">{</span>start<span class="sc">:.1f}</span><span class="ss">"</span>, color<span class="op">=</span>palette[i])</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>        ax.text(end_year <span class="op">+</span> <span class="fl">0.2</span>, end <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f"</span><span class="sc">{</span>end<span class="sc">:.1f}</span><span class="ss">"</span>, color<span class="op">=</span>palette[i])</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Shade 2008–2009 global recession</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="dv">2008</span> <span class="kw">in</span> years <span class="kw">and</span> <span class="dv">2009</span> <span class="kw">in</span> years:</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>        ax.axvspan(<span class="dv">2008</span>, <span class="dv">2009</span>, color<span class="op">=</span><span class="st">"grey"</span>, alpha<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Under-5 Mortality Rate (per 1,000 live births)</span><span class="ch">\n</span><span class="st">1999–2019"</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Mortality per 1,000 live births"</span>)</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    ax.legend(title<span class="op">=</span><span class="st">"Country"</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.04</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="st">"upper left"</span>)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    plt.show() <span class="co"># &lt;--- Forces inline display</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ====== 3. FacetGrid by country ======</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> sns.FacetGrid(</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>        df_long,</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>        col<span class="op">=</span><span class="st">"Country Name"</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>        col_wrap<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>        sharey<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>        aspect<span class="op">=</span><span class="fl">1.3</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    g.map_dataframe(</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>        sns.lineplot,</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Year"</span>,</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Mortality"</span>,</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">"o"</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>    g.fig.suptitle(<span class="st">"Under-5 Mortality Trends by Country (1999–2019)"</span>, y<span class="op">=</span><span class="fl">1.05</span>, fontsize<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>    plt.show() <span class="co"># &lt;--- Forces inline display</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ====== 4. Heatmap (Country × Year) ======</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    heat_df <span class="op">=</span> df_long.pivot(index<span class="op">=</span><span class="st">"Country Name"</span>, columns<span class="op">=</span><span class="st">"Year"</span>, values<span class="op">=</span><span class="st">"Mortality"</span>)</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">5</span>))</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    sns.heatmap(</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>        heat_df,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">"magma_r"</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>        linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>        linecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>        cbar_kws<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Mortality (per 1,000 live births)"</span>},</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Heatmap of Under-5 Mortality Rate (1999–2019)"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Country"</span>)</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-6-output-1.png" width="1406" height="736" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-6-output-2.png" width="1465" height="799" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-6-output-3.png" width="1552" height="447" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Across all five countries, under-5 mortality declined between 1999 and 2019, but the speed and magnitude of improvement varied substantially. Azerbaijan experienced the steepest and most consistent reduction, falling from extremely high mortality levels to around 22 deaths per 1,000 by 2019, while Botswana—also starting very high—declined more slowly and showed mid-2000s fluctuations likely linked to the HIV/AIDS crisis. Albania and Colombia began with much lower mortality and steadily improved, with Albania ultimately reaching one of the lowest levels among the group. Fiji stands out as the only country without a clear downward trend: its mortality rate remained nearly flat for two decades and even rose slightly after 2015, suggesting stagnation in child-health progress despite having a GDP per capita similar to the others. Together, these results show that comparable economic levels do not guarantee similar health outcomes; country-specific health systems, social conditions, and historical factors shape very different trajectories in child survival.</p>
+</section>
+<section id="education" class="level2">
+<h2 class="anchored" data-anchor-id="education">Education</h2>
+<p>This section plots primary, secondary, and tertiary gross enrollment rates for our five countries from 1999–2019, interpolating only isolated missing years. The goal is to compare how education coverage at each level has evolved over time and how quickly different countries expanded access along the schooling pipeline.</p>
+<div id="de831d13" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_isolated_nans(s: pd.Series) <span class="op">-&gt;</span> pd.Series:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    For a 1D series:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    - If there is exactly ONE NaN between two non-NaNs, replace it</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">      with the average of its neighbors.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - If there are 2+ consecutive NaNs, leave them as NaN.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - NaNs at the start or end are left as NaN.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> s.copy()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> s.values</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    isnan <span class="op">=</span> pd.isna(values)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(values)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> i <span class="op">&lt;</span> n:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> isnan[i]:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            start <span class="op">=</span> i</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># find end of this NaN run</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> i <span class="op">+</span> <span class="dv">1</span> <span class="op">&lt;</span> n <span class="kw">and</span> isnan[i <span class="op">+</span> <span class="dv">1</span>]:</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            end <span class="op">=</span> i</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            length <span class="op">=</span> end <span class="op">-</span> start <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># isolated single NaN, not at edges, neighbors are non-NaN</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                length <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> start <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> end <span class="op">&lt;</span> n <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> <span class="kw">not</span> isnan[start <span class="op">-</span> <span class="dv">1</span>]</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                <span class="kw">and</span> <span class="kw">not</span> isnan[end <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>            ):</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                values[start] <span class="op">=</span> (values[start <span class="op">-</span> <span class="dv">1</span>] <span class="op">+</span> values[end <span class="op">+</span> <span class="dv">1</span>]) <span class="op">/</span> <span class="fl">2.0</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                isnan[start] <span class="op">=</span> <span class="va">False</span>  <span class="co"># now filled</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Series(values, index<span class="op">=</span>s.index)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------- data ----------------</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/living_standards_5countries_1999_2019.csv"</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [<span class="st">"Botswana"</span>, <span class="st">"Azerbaijan"</span>, <span class="st">"Albania"</span>, <span class="st">"Colombia"</span>, <span class="st">"Fiji"</span>]</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"Country Name"</span>].isin(countries)]</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values([<span class="st">"Country Name"</span>, <span class="st">"Year"</span>])</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>enrollment_cols <span class="op">=</span> {</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"primary_enrollment_gross"</span>: <span class="st">"Primary School Enrollment (</span><span class="sc">% g</span><span class="st">ross)"</span>,</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"secondary_enrollment_gross"</span>: <span class="st">"Secondary School Enrollment (</span><span class="sc">% g</span><span class="st">ross)"</span>,</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tertiary_enrollment_gross"</span>: <span class="st">"Tertiary School Enrollment (</span><span class="sc">% g</span><span class="st">ross)"</span>,</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="co"># --------- fill isolated NAs ----------</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> enrollment_cols.keys():</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>        mask <span class="op">=</span> df[<span class="st">"Country Name"</span>] <span class="op">==</span> country</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check if column exists to avoid errors</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>            df.loc[mask, col] <span class="op">=</span> fill_isolated_nans(df.loc[mask, col])</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------- plotting ---------------</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, title <span class="kw">in</span> enrollment_cols.items():</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># skip if column missing in data</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> df[df[<span class="st">"Country Name"</span>] <span class="op">==</span> country]</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>        ax.plot(</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>            temp[<span class="st">"Year"</span>],</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>            temp[col],</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>            marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span>country,</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title <span class="op">+</span> <span class="st">" (1999–2019)"</span>)</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Gross enrollment (%)"</span>)</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    ax.legend(title<span class="op">=</span><span class="st">"Country"</span>)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout()</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Explicitly show the plot to render it inline in the QMD file</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-7-output-1.png" width="735" height="447" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-7-output-2.png" width="735" height="447" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_template_files/figure-html/cell-7-output-3.png" width="735" height="447" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Primary Education</strong></p>
+<p>Primary enrollment across the five countries remains relatively high over the 1999–2019 period, but the countries follow different trajectories. Colombia begins with extremely high enrollment—above 125%—but then experiences a steady decline after 2010, suggesting either changes in age reporting, improvements in data accuracy, or shifts in population and school-entry patterns. Botswana, Albania, and Azerbaijan maintain stable enrollment around 100–112%, showing consistent access to foundational education, while Fiji remains steady until the mid-2010s and then rises sharply to about 115%, possibly reflecting expanded outreach or policy reforms. These patterns indicate that although all countries achieve broad primary education coverage, enrollment stability and intensity differ due to demographic transitions, migration, or administrative changes. Missing values in the primary dataset were minimal; isolated gaps were interpolated, while consecutive missing years were left blank to preserve trend accuracy.</p>
+<p><strong>Secondary Education</strong></p>
+<p>Secondary enrollment shows clearer divergence among the countries, reflecting differences in educational progression beyond the basic level. Albania displays a strong upward trend, moving from roughly 75% to surpassing 100% by the early 2010s, which likely reflects national reforms aimed at expanding high school participation. Colombia also improves steadily, indicating continuous investment in upper-level education. Fiji grows more modestly but consistently, suggesting gradual strengthening of secondary pathways, while Botswana remains relatively flat between 75% and 83%, hinting at persistent barriers such as limited school capacity, dropout rates, or rural access issues. Azerbaijan exhibits the most dramatic pattern, with a sudden jump from the high 80s to above 100% after 2017, a change that is more likely tied to reporting or classification adjustments rather than an immediate structural increase. Overall, secondary patterns reveal how policy decisions, institutional expansion, and social expectations shape educational outcomes differently across countries. Missing secondary values were handled by interpolating only single-year gaps, and longer missing intervals were left blank to avoid creating misleading continuity.</p>
+<p><strong>Tertiary Education</strong></p>
+<p>Tertiary enrollment varies the most, highlighting substantial differences in national higher-education systems even among countries with similar GDP per capita. Albania demonstrates one of the most dramatic expansions, rising from around 15% to more than 60%, signaling major growth in university access and capacity. Colombia also shows steady upward movement toward nearly 60%, reflecting growing demand for higher skills and improved post-secondary pathways. Fiji experiences a sharp increase after 2010, ultimately surpassing 80%, suggesting significant government prioritization or expanded scholarship and institutional options. In contrast, Botswana shows slow, incremental growth from about 7% to roughly 22%, indicating constraints in higher-education infrastructure or affordability. Azerbaijan grows moderately from 10% to the low-30s but does not match the rapid expansion seen in the other regions. These differences underscore that tertiary education is highly sensitive to policy investments, labor-market incentives, and national development strategies. Missing tertiary data were managed by interpolating isolated gaps and leaving longer blank sequences untouched to maintain the integrity of the observed patterns.</p>
+</section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>Write your conclusion here.</p>
+<p>This project examines how five countries—Albania, Azerbaijan, Botswana, Colombia, and Fiji—with comparable 1999 GDP per capita evolved differently over 1999–2019 across seven World Bank indicators: employment, life expectancy, under-5 mortality, and primary, secondary, and tertiary enrollment rates.</p>
+<p>Results show divergent trajectories despite similar starting points. Employment rates varied sharply: Botswana and Colombia remained highest (60–65%), while Azerbaijan declined below 50% and Albania improved to 55%. Life expectancy improved in all countries, with Botswana gaining 14+ years from HIV/AIDS treatment expansion, while Fiji gained under 1 year. Under-5 mortality declined universally, but Azerbaijan achieved the steepest reduction while Fiji stagnated.</p>
+<p>Education revealed the starkest differences. Primary enrollment stayed stable across all nations. Secondary enrollment expanded significantly in Albania and Colombia but plateaued in Botswana. Tertiary enrollment showed the most dramatic divergence: Albania, Colombia, and Fiji surged to 60–80%, while Botswana and Azerbaijan grew modestly to 22–30%.</p>
+<p>The analysis demonstrates that comparable initial income levels do not guarantee similar development outcomes. Country-specific policies, institutional capacity, and social conditions fundamentally shape human development trajectories, even among geographically and economically similar nations.</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>

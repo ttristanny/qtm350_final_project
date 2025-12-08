@@ -11,7 +11,7 @@ plt.rcParams["axes.spines.right"] = False
 plt.rcParams["axes.titleweight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
 
-FILE = "/Users/liuchang/PycharmProjects/pythonProject/QTM350/qtm350_final_project/data/living_standards_5countries_1999_2019.csv"
+FILE = "data/living_standards_5countries_1999_2019.csv"
 
 df_full = pd.read_csv(FILE)
 countries = ["Botswana", "Azerbaijan", "Albania", "Colombia", "Fiji"]

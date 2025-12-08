@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Import the dataset
-df = pd.read_csv('data/data.csv')
+df = pd.read_csv('data/living_standards_5countries_1999_2019.csv')
 
 # Print the dataset
 print(df)
