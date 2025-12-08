@@ -29,16 +29,15 @@ The dataset used in this project is the **World Development Indicators (WDI)** f
 
 The WDI dataset enables cross‑country comparisons and long‑run development analysis.
 
-## Data Import
+## Data Import & Cleaning
 
 ```{python}
 # Use below line of code to install the dataset package
-# !pip install wbgapi
-
+# !pip install --upgrade wbgapi
 import wbgapi as wb
+import pandas as pd
 
-gdp_pc = wb.data.DataFrame('NY.GDP.PCAP.KD')
-gdp_pc.head()
+
 ```
 
 # Data Analysis
