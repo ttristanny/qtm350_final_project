@@ -11,34 +11,23 @@ plt.rcParams["axes.spines.right"] = False
 plt.rcParams["axes.titleweight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
 
-FILE = "/Users/liuchang/Downloads/API_SH/API_SH.DYN.MORT_DS2_en_csv_v2_6199.csv"
+FILE = "/Users/liuchang/PycharmProjects/pythonProject/QTM350/qtm350_final_project/data/living_standards_5countries_1999_2019.csv"
 
-df_raw = pd.read_csv(FILE, skiprows=4)
-
-INDICATOR = "SH.DYN.MORT"
-
-df = df_raw[df_raw["Indicator Code"] == INDICATOR].copy()
-
+df_full = pd.read_csv(FILE)
 countries = ["Botswana", "Azerbaijan", "Albania", "Colombia", "Fiji"]
+df_full = df_full[df_full["Country Name"].isin(countries)].copy()
 
-years = [str(y) for y in range(1999, 2019+1)]
-
-df = df[df["Country Name"].isin(countries)]
-
-df = df[["Country Name"] + years]
-
-df_long = df.melt(
-    id_vars="Country Name",
-    value_vars=years,
-    var_name="Year",
-    value_name="Mortality"
+df_long = df_full[["Country Name", "Year", "under5_mortality_per_1000"]].rename(
+    columns={"under5_mortality_per_1000": "Mortality"}
 )
 
+df_long = df_long.dropna(subset=["Mortality"])
 df_long["Year"] = df_long["Year"].astype(int)
-df_long = df_long.dropna()
+
+countries = df_long["Country Name"].unique().tolist()
+years = sorted(df_long["Year"].unique())
 
 palette = sns.color_palette("viridis", n_colors=len(countries))
-
 fig, ax = plt.subplots(figsize=(15, 8))
 
 for i, (country, group) in enumerate(df_long.groupby("Country Name")):
@@ -54,20 +43,20 @@ for i, (country, group) in enumerate(df_long.groupby("Country Name")):
         color=palette[i]
     )
 
-    # Highlight start (1999) + end (2019)
-    start = group[group["Year"] == 1999]["Mortality"].iloc[0]
-    end = group[group["Year"] == 2019]["Mortality"].iloc[0]
+    start_year = group["Year"].min()
+    end_year = group["Year"].max()
+    start_val = group.loc[group["Year"] == start_year, "Mortality"].iloc[0]
+    end_val = group.loc[group["Year"] == end_year, "Mortality"].iloc[0]
 
-    ax.text(1999 - 0.2, start + 1, f"{start:.1f}", color=palette[i])
-    ax.text(2019 + 0.2, end + 1, f"{end:.1f}", color=palette[i])
+    ax.text(start_year - 0.2, start_val + 1, f"{start_val:.1f}", color=palette[i])
+    ax.text(end_year + 0.2, end_val + 1, f"{end_val:.1f}", color=palette[i])
 
-# Shade 2008–2009 global recession
-ax.axvspan(2008, 2009, color="grey", alpha=0.15)
+if 2008 in years and 2009 in years:
+    ax.axvspan(2008, 2009, color="grey", alpha=0.15)
 
-ax.set_title("Under-5 Mortality Rate (per 1,000 live births)\n1999–2019", fontsize=20)
+ax.set_title("Under-5 Mortality Rate (per 1,000 live births) 1999–2019", fontsize=20)
 ax.set_xlabel("Year")
 ax.set_ylabel("Mortality per 1,000 live births")
-
 ax.legend(title="Country", bbox_to_anchor=(1.04, 1), loc="upper left")
 
 plt.tight_layout()
@@ -90,7 +79,6 @@ g.map_dataframe(
 )
 
 g.fig.suptitle("Under-5 Mortality Trends by Country (1999–2019)", y=1.05, fontsize=18)
-
 plt.show()
 
 heat_df = df_long.pivot(index="Country Name", columns="Year", values="Mortality")
@@ -101,12 +89,12 @@ sns.heatmap(
     cmap="magma_r",
     linewidths=0.5,
     linecolor="white",
-    cbar_kws={"label": "Mortality (per 1,000 live births)"},
+    cbar_kws={"label": "Mortality (per 1,000 live births)"}
 )
 
 plt.title("Heatmap of Under-5 Mortality Rate (1999–2019)", fontsize=18, pad=15)
 plt.xlabel("Year")
 plt.ylabel("Country")
-
 plt.tight_layout()
 plt.show()
+
